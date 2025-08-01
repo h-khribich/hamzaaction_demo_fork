@@ -17,7 +17,12 @@ jobs:
 
       - name: Test checkout
         run: ls -al
-        
+
+      - run: env | sort
+
+      - name: Le test qui echoue
+        run: exit(1)
+
 
 
 
