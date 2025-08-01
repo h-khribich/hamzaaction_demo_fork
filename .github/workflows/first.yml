@@ -15,6 +15,10 @@ jobs:
       - name: Test run
         run: echo Salut
 
+      - name: Test checkout
+        run: ls -al
+        
+
 
 
 
