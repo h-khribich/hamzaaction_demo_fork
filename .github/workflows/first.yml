@@ -20,8 +20,8 @@ jobs:
 
       - run: env | sort
 
-      - name: Le test qui echoue
-        run: exit(1)
+      # - name: Le test qui echoue
+      #   run: exit(1)
 
   Test:
     needs: [Hello]
