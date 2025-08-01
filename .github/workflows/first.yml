@@ -1,6 +1,8 @@
 name: Le premier
 
 on:
+  pull_request:
+    branches: [main]
   push:
     branches: [main]
       
@@ -30,7 +32,10 @@ jobs:
     steps:
       - run: echo TOUT OK
 
-
+  Deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo SUR SERVEUR
 
 
 
