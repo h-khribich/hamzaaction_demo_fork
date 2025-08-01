@@ -23,6 +23,13 @@ jobs:
       - name: Le test qui echoue
         run: exit(1)
 
+  Test:
+    needs: [Hello]
+    runs-on: ubuntu-latest
+
+    steps:
+      - run: echo TOUT OK
+
 
 
 
