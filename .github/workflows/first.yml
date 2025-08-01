@@ -8,6 +8,7 @@ on:
       
 jobs:
   Hello:
+    if: ${{ github.event_name == 'pull_request' }}
     runs-on: ubuntu-latest
 
     steps:
@@ -33,6 +34,7 @@ jobs:
       - run: echo TOUT OK
 
   Deploy:
+    if: ${{ github.event_name == 'push' }}
     runs-on: ubuntu-latest
     steps:
       - run: echo SUR SERVEUR
