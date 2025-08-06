@@ -1,0 +1,68 @@
+  name: Build, Test and Deploy
+
+  on:
+    push:
+      branches: [main]
+    workflow_dispatch: 
+
+  jobs:
+
+    build:
+      runs-on: ubuntu-22.04
+      steps:
+        - name: Cloner le repo
+          run: git clone https://github.com/h-khribich/hamzaAction.git
+
+        - name: Construire les images Docker backend et BDD
+          run: |
+            cd hamzaAction
+            docker build -t local-back -f docker-back-build.yml .
+            docker build -t local-db -f docker-local-bdd.yml .
+
+        - name: Construire le front (npm)
+          run: |
+            cd hamzaAction/frontend
+            npm install
+            npm run build
+
+    test:
+      runs-on: ubuntu-22.04
+      needs: build
+      steps: 
+        - name: Cloner le repo
+          run: git clone https://github.com/h-khribich/hamzaAction.git
+
+        - name: Lancer la base de données via Docker Compose
+          run: |
+            cd hamzaAction
+            docker compose -f docker-local-bdd.yml up -d
+
+        - name: Attendre MariaDB
+          run: sleep 15
+
+        - name: Construire l’image Docker du backend
+          run: |
+            cd hamzaAction
+            docker build -t local-back -f docker-back-build.yml .
+
+        - name: Lancer le backend
+          run: |
+            docker run -d --rm \
+              --name back \
+              --network hamzaaction_default \
+              -p 3000:3000 \
+              local-back
+
+        - name: Lancer les tests e2e
+          run: |
+            cd hamzaAction/frontend
+            npm install
+            npm run build
+            npx cypress run
+
+    deploy:
+      runs-on: ubuntu-22.04
+      needs: test
+      steps:
+        - name: Simulation de déploiement
+          run: echo "Mock deploy - Votre application serait déployée ici" 
