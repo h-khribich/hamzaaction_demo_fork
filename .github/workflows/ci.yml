@@ -34,18 +34,10 @@
         - name: Attendre MariaDB
           run: sleep 15
 
-        - name: Construire l’image Docker du backend
+        - name: Lancer le backend + BDD via Docker Compose
           run: |
             cd hamzaAction
-            docker build -t local-back -f docker-back-build.yml .
-
-        - name: Lancer le backend
-          run: |
-            docker run -d --rm \
-              --name back \
-              --network hamzaaction_default \
-              -p 3000:3000 \
-              local-back
+            docker compose -f docker-back-build.yml up -d
 
         - name: Lancer les tests e2e
           run: |
