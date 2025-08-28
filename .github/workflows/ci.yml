@@ -44,7 +44,7 @@
             cd hamzaAction/frontend
             npm install
             npm run build
-            npx cypress run --config baseUrl=http://localhost:517
+            npx cypress run --config baseUrl=http://localhost:5173
 
     deploy:
       runs-on: ubuntu-22.04
