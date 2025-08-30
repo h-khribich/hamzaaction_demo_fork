@@ -30,9 +30,9 @@
           run: |
             cd hamzaAction/frontend
             npm install
-            npm build
-            npm preview
-            npm cypress:run
+            npm run build
+            npm run preview
+            npm run cypress:run
 
     deploy:
       runs-on: ubuntu-22.04
