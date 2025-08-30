@@ -23,7 +23,7 @@
           working-directory: frontend
           run: npm ci
 
-        - name: Run Vite (bg) & wait
+        - name: Run Vite (bg) and wait
           working-directory: frontend
           run: |
             npm run dev -- --host --port 5173 &
