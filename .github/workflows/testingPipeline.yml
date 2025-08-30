@@ -8,7 +8,6 @@
       runs-on: ubuntu-22.04
       steps: 
         - uses: actions/checkout@v4
-        with: { node-version: 20, cache: npm, cache-dependency-path: frontend/package-lock.json }
 
         - name: Start BDD
           run: docker compose -f docker-local-bdd.yml up -d
@@ -26,7 +25,7 @@
         - name: Run Vite (bg) and wait
           working-directory: frontend
           run: |
-            npm run dev -- --host --port 5173 &
+            npm run dev -- --host --port 5173
             npx wait-on http://127.0.0.1:5173
 
         - name: Cypress
