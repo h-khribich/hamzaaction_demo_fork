@@ -1,4 +1,4 @@
-  name: Build, Test and Deploy
+  name: Test & Deploy
 
   on:
     push:
@@ -7,21 +7,8 @@
 
   jobs:
 
-    build:
-      runs-on: ubuntu-22.04
-      steps:
-        - name: Cloner le repo
-          run: git clone https://github.com/h-khribich/hamzaAction.git
-
-        - name: Construire le front (npm)
-          run: |
-            cd hamzaAction/frontend
-            npm install
-            npm run build
-
     test:
       runs-on: ubuntu-22.04
-      needs: build
       steps: 
         - name: Cloner le repo
           run: git clone https://github.com/h-khribich/hamzaAction.git
@@ -43,8 +30,8 @@
           run: |
             cd hamzaAction/frontend
             npm install
-            npm run build
-            npx cypress run --config baseUrl=http://localhost:5173
+            npm start
+            npx cypress run
 
     deploy:
       runs-on: ubuntu-22.04
