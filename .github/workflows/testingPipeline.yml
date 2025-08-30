@@ -25,11 +25,16 @@
         - name: Run Vite (bg) and wait
           working-directory: frontend
           run: |
-            npm run dev -- --host --port 5173
-            npx wait-on http://localhost:5173
+            npm run dev -- --host --port 5173 > /dev/null 2>&1 & echo $! > ../vite.pid
+            npx wait-on http://127.0.0.1:5173 -t 90000
 
         - name: Cypress
           working-directory: frontend
           env:
             CYPRESS_baseUrl: http://127.0.0.1:5173
           run: npx cypress run
+
+        - name: Kill Vite
+          if: always()
+          run: |
+            kill $(cat frontend/../vite.pid) 2>/dev/null || true
