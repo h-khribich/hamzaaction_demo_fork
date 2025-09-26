@@ -50,11 +50,12 @@ jobs:
         env:
           # This is where you will need to introduce the Snyk API token created with your Snyk account
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+          SNYK_ORG_ID: ${{ secrets.SNYK_ORG_ID }}
 
         # Runs Snyk Code (SAST) analysis and uploads result into GitHub.
         # Use || true to not fail the pipeline
       - name: Snyk Code test
-        run: snyk code test --sarif > snyk-code.sarif # || true
+        run: snyk code test --sarif > snyk-code.sarif || true
 
         # Runs Snyk Open Source (SCA) analysis and uploads result to Snyk.
       - name: Snyk Open Source monitor
@@ -63,9 +64,9 @@ jobs:
         # Runs Snyk Infrastructure as Code (IaC) analysis and uploads result to Snyk.
         # Use || true to not fail the pipeline.
       - name: Snyk IaC test and report
-        run: snyk iac test --report # || true
+        run: snyk iac test --report || true
 
         # Build the docker image for testing
       - name: Build a Docker image
-        run: docker build -t your/image-to-test .
+        run: docker build -t your/imageto-test .
         # Runs Snyk Container (Container and SCA) analysis and uploads result to Snyk.
